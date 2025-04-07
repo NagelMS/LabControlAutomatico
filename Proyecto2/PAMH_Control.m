@@ -12,19 +12,19 @@ angulo = pamh.ANGULO;
 entrada = pamh.ESTIMULO;
 
 % Gráfica de experimento completo
-% figure;
-% plot(tiempo,angulo,'LineWidth',1.5,'Color',[0.4 0.4 1],'LineStyle','-');
-% hold on;
-% plot(tiempo,entrada,'LineWidth',2,'Color',[0.8 0 0.4])
-% xlim([0 64])
-% ylim([-0.5 2])
-% title('Medición experimental del sistema PAMH','FontSize',14)
-% xlabel('Tiempo (s)','FontSize',14)
-% ylabel('Angulo (rad)','FontSize',14)
-% grid on;
-% grid minor;
-% hold off;
-% hold off;
+ %figure;
+ %plot(tiempo,angulo,'LineWidth',1.5,'Color',[0.4 0.4 1],'LineStyle','-');
+ %hold on;
+ %plot(tiempo,entrada,'LineWidth',2,'Color',[0.8 0 0.4])
+ %xlim([0 64])
+ %ylim([-0.5 2])
+ %title('Medición experimental del sistema PAMH','FontSize',14)
+ %xlabel('Tiempo (s)','FontSize',14)
+ %ylabel('Angulo (rad)','FontSize',14)
+ %grid on;
+ %grid minor;
+ %hold off;
+ %hold off;
 
 % Tiempo de muestreo
 deltaT = tiempo(2) - tiempo(1);
@@ -97,3 +97,14 @@ Kq = lqr(As,Bs,Qs,Rs);
 K_q = Kq(:,1:2);
 KI_q = -Kq(:,3:3);
 
+%PID cancelacion polos
+eig(model)
+%Se saca C_PID con cancelacion de polos manual en sisotool 
+sys_pid = tf(C_PID);
+[num_pid, den_pid] = tfdata(sys_pid, 'v');
+%Se saca C_PIDIMC con el IMC de sisotool
+sys_pidimc = tf(C__PIDIMC);
+[num_pidimc, den_pidimc] = tfdata(sys_pidimc, 'v');
+%Se saca C_PIDtune con el PID tuning de sisotool
+sys_pidt = tf(C_PIDtune);
+[num_pidt, den_pidt] = tfdata(sys_pidt, 'v');
