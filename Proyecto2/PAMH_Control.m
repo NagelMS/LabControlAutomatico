@@ -89,7 +89,7 @@ Ks = acker(As,Bs,P);
 K = Ks(:,1:2);
 KI = -Ks(:,3:3);
 
-Qs = diag([10 10 14.5]);
+Qs = diag([5 5 8.5]);
 Rs = 1;
 
 Kq = lqr(As,Bs,Qs,Rs);
@@ -105,6 +105,10 @@ sys_pid = tf(C_PID);
 %Se saca C_PIDIMC con el IMC de sisotool
 sys_pidimc = tf(C__PIDIMC);
 [num_pidimc, den_pidimc] = tfdata(sys_pidimc, 'v');
+%Se saca C_PID_IMC2 con el IMC de sisotool
+sys_pidimc2 = tf(C_PID_IMC2);
+
+[num_pidimc2, den_pidimc2] = tfdata(sys_pidimc2, 'v');
 %Se saca C_PIDtune con el PID tuning de sisotool
 sys_pidt = tf(C_PIDtune);
 [num_pidt, den_pidt] = tfdata(sys_pidt, 'v');
