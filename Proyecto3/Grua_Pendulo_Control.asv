@@ -61,7 +61,7 @@ pos_y = lsim(pos_model,entrada,tiempo);
 
 % 
 % % Respuesta del modelo ante el estimulo
-angle_y = lsim(angle_model,entrada,tiempo);
+% angle_y = lsim(angle_model,entrada,tiempo);
 % 
 % % Gráfica de la respuesta experimental y del modelo
 % figure;
@@ -105,30 +105,27 @@ model_ss = ss(A,B,C,0);
 
 y_ss = lsim(model_ss,entrada,tiempo);
 
+
 % Gráfica de la respuesta experimental y del modelo
 figure;
-subplot(2,1,1)
-plot(tiempo,pos_y,'LineWidth',2,'Color',[0.8 0 0.4],'LineStyle','-');
+plot(tiempo,pos_y,'LineWidth',1.5,'Color',[0 0 0],'LineStyle','-');
 hold on;
+plot(tiempo,entrada,'LineWidth',2,'Color',[0.8 0 0.4])
+plot(tiempo,posicion,'LineWidth',1,'Color',[0.8 0.2 0.9],'LineStyle','-');
+plot(tiempo,y_ss(:,1),'LineWidth',3,'Color',[0.8 0.2 0.9],'LineStyle','-');
 xlim([0 3])
-ylim([-0.05 0.3])
-title('Respuesta del angulo modelado en función de transferencia','FontSize',14)
+ylim([0 0.3])
+title('Respuesta del sistema modelado en posicion','FontSize',14)
 xlabel('Tiempo (s)','FontSize',14)
 ylabel('Posicion','FontSize',14)
-grid on;
-grid minor;
-subplot(2,1,2)
-plot(tiempo,y_ss(:,1),'LineWidth',2,'Color',[0.8 0.2 0.9],'LineStyle','-');
-xlim([0 3])
-ylim([-0.05 0.3])
-title('Respuesta del angulo modelado en espacio de estados','FontSize',14)
-xlabel('Tiempo (s)','FontSize',14)
-ylabel('Posicion','FontSize',14)
+legend('Posición Modelada','Posicion Experimento','Entrada','Posicio Modelo Estados')
 grid on;
 grid minor;
 hold off;
 
 
+% Respuesta del modelo ante el estimulo
+angle_y = lsim(angle_model,entrada,tiempo);
 
 % Gráfica de la respuesta experimental y del modelo
 figure;
@@ -155,7 +152,7 @@ hold off;
 
 C = [1 0 0 0];
 
-model_ss = ss(A,B,C,0);
+
 
 %% Guardando workspace
 save('grua.mat');
