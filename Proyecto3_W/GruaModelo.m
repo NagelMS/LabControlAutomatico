@@ -84,4 +84,31 @@ grid minor;
 hold off;
 hold off;
 
+%Creacion del modelo SISO del carro
+carro_siso = ss([0 1; 0 -9.431] , [0 ; 0.23092], [1 0], 0);
+zpk(carro_siso);
+
+%Creacion del modelo SISO del angulo
+pendulo_siso = ss([0 1; -35.31 -0.01401], [0 ; 1], [(-0.29689*4.952) -0.29689], 0);
+zpk(pendulo_siso);
+
+%Modelo de pendulo en forma canonica observable
+penduloFCO = canon(pendulo_siso,'companion');
+pendulo_siso.a = penduloFCO.a';
+pendulo_siso.b = penduloFCO.c';
+pendulo_siso.c = penduloFCO.b';
+zpk(pendulo_siso);
+
+%% Matriz general del sistema
+A = [0 0 1 0; 0 0 0 1; 0 0 -9.431 0; 0 -35.31 0 -0.01401];
+B = [0 ; -0.2969 ; 0.23092; -1.4660];
+C = [1 0 0 0; 0 1 0 0];
+grua_siso = ss(A,B,C,0);
+
+step(grua_siso,4)
+
+
+
+
 save('GruaWorkspace.mat');
+

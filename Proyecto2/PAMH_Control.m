@@ -102,13 +102,25 @@ eig(model)
 %Se saca C_PID con cancelacion de polos manual en sisotool 
 sys_pid = tf(C_PID);
 [num_pid, den_pid] = tfdata(sys_pid, 'v');
-%Se saca C_PIDIMC con el IMC de sisotool
-sys_pidimc = tf(C__PIDIMC);
-[num_pidimc, den_pidimc] = tfdata(sys_pidimc, 'v');
 %Se saca C_PID_IMC2 con el IMC de sisotool
-sys_pidimc2 = tf(C_PID_IMC2);
+sys_pidimc2 = tf(C_PIDIMC2);
 
 [num_pidimc2, den_pidimc2] = tfdata(sys_pidimc2, 'v');
-%Se saca C_PIDtune con el PID tuning de sisotool
-sys_pidt = tf(C_PIDtune);
-[num_pidt, den_pidt] = tfdata(sys_pidt, 'v');
+
+% Gráfica de la respuesta experimental y del modelo
+ figure;
+ plot(tiempo,entrada,'LineWidth',1.5,'Color',[0.8 0.2 0.9],'LineStyle','-');
+ hold on;
+ plot(tiempo,entrada,'LineWidth',2,'Color',[0.8 0 0.4])
+  plot(tiempo,entrada,'LineWidth',2,'Color',[0.8 0 0.4])
+   plot(tiempo,entrada,'LineWidth',2,'Color',[0.8 0 0.4])
+ xlim([0 64])
+ ylim([-0.7 2])
+ title('Respuesta del sistema modelado','FontSize',14)
+ xlabel('Tiempo (s)','FontSize',14)
+ ylabel('Amplitud','FontSize',14)
+ legend('Angulo Modelado (rad)','Entrada')
+ grid on;
+ grid minor;
+ hold off;
+ hold off;
