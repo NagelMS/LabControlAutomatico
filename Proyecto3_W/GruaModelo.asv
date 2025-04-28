@@ -107,6 +107,8 @@ grua_siso = ss(A,B,C,0);
 
 step(grua_siso,20)
 
+save('GruaWorkspace.mat');
+
 %% Obtencion del controlador REI
 C1 = [1 0 0 0];
 As = [A [0;0;0;0]; -C1 0];
@@ -119,15 +121,7 @@ ZETA = 0.7448;
 rad2deg(acos(ZETA));
 degree = rad2deg(atan(0.5/0.7));
 cos(deg2rad(degree));
-Ks = acker(As,Bs,Ps);
-K = Ks(1:4);
-Ki = -Ks(5);
+Ks = acker(As,Bs)
 
 
 
-
-
-
-
-
-save('GruaWorkspace.mat');
