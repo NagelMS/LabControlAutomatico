@@ -111,10 +111,11 @@ step(grua_siso,20)
 C1 = [1 0 0 0];
 As = [A [0;0;0;0]; -C1 0];
 Bs = [B;0];
-ts = 6;
+ts = 5.8;
 zetaomegan = 4/ts;
 % 0.7 sale de sumarle un poco a ztomgn
-Ps = [-0.7+0.5i -0.7-0.5i -3.5 -3.6 -3.7];
+Ps = [-zetaomegan+0.5i -zetaomegan-0.5i -zetaomegan*4 -zetaomegan*4+0.1 -zetaomegan*4
+    +0.2];
 ZETA = 0.7448;
 rad2deg(acos(ZETA));
 degree = rad2deg(atan(0.5/0.7));
