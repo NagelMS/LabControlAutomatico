@@ -107,15 +107,14 @@ grua_siso = ss(A,B,C,0);
 
 step(grua_siso,20)
 
-%% Obtencion del controlador REI
+%% Obtencion del controlador REI po ubicacion de polos
 C1 = [1 0 0 0];
 As = [A [0;0;0;0]; -C1 0];
 Bs = [B;0];
 ts = 5.8;
 zetaomegan = 4/ts;
 % 0.7 sale de sumarle un poco a ztomgn
-Ps = [-zetaomegan+0.5i -zetaomegan-0.5i -zetaomegan*4 -zetaomegan*4+0.1 -zetaomegan*4
-    +0.2];
+Ps = [-zetaomegan+0.5i -zetaomegan-0.5i -zetaomegan*4 -zetaomegan*4+0.1 -zetaomegan*4+0.2];
 ZETA = 0.7448;
 rad2deg(acos(ZETA));
 degree = rad2deg(atan(0.5/0.7));
@@ -124,6 +123,41 @@ Ks = acker(As,Bs,Ps);
 K = Ks(1:4);
 Ki = -Ks(5);
 
+%% REI LQR 
+Mx = [A B; -[1 0 0 0], 0];
+AsL = [A [0;0;0;0];-C1 0];
+BsL = [B;0];
+CsL = [C1 0];
+Q = eye(5);
+R=1;
+KsL = lqr(AsL, BsL, Q, R);
+KL = KsL(1:4);
+KiL = -KsL(5); 
+eig(AsL-BsL*KsL)
+
+%% Diseño de Control Ackerman
+
+As1 = [A [0;0;0;0]; -C1 0]
+Bs1 = [B; 0];
+
+Ps1 = [-0.7+0.5i -0.7-0.5i -3.5 -3.6 -3.7];
+
+Ks1 = acker(As1,Bs1,Ps1)
+
+K = Ks1(1:4);
+Ki = -Ks1(5);
+
+%% Diseño Control LQR
+
+Q = diag([200 50 50 50 200])
+R = 1;
+
+
+Kq = lqr(As,Bs,Q,R)
+
+K_q = Kq(1:4);
+Ki_q = -Kq(5);
+C2 = [1 0 0 0; 0 1 0 0];
 
 
 
