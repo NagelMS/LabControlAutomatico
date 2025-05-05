@@ -175,25 +175,25 @@ model_ss = ss(A,B,C,0);
 
 %% Diseño de Control Ackerman
 
-As = [A1 [0;0;0;0]; -C 0]
+As = [A1 [0;0;0;0]; -C 0];
 Bs = [B1; 0];
 
 ts = 6;
 zetaomegan = 4/ts;
 Ps = [-0.7+0.5i -0.7-0.5i -3.5 -3.6 -3.7];
 
-Ks = acker(As,Bs,Ps)
+Ks = acker(As,Bs,Ps);
 
 K = Ks(1:4);
 Ki = -Ks(5);
 
 %% Diseño Control LQR
-
-Q = diag([200 50 50 50 200])
+Q = diag([400 1 200 1 400]);
+%Q = diag([600 5 600 5 600])
 R = 1;
 
 
-Kq = lqr(As,Bs,Q,R)
+Kq = lqr(As,Bs,Q,R);
 
 K_q = Kq(1:4);
 Ki_q = -Kq(5);
