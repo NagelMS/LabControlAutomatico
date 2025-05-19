@@ -131,8 +131,8 @@ KiL = -KsL(5);
 eig(AsL-BsL*KsL)
 
 %% Diseño de Control Ackerman
-
-As1 = [A [0;0;0;0]; -C1 0];
+A_a = 2.1*A;
+As1 = [A_a [0;0;0;0]; -C1 0];
 Bs1 = [B; 0];
 
 Ps1 = [-0.7+0.5i -0.7-0.5i -3.5 -3.6 -3.7];
@@ -140,20 +140,19 @@ Ps1 = [-0.7+0.5i -0.7-0.5i -3.5 -3.6 -3.7];
 Ks1 = acker(As1,Bs1,Ps1);
 
 K1  = 0.98*Ks1(1:4);
-Ki1 = 1.04*-Ks1(5);
-A_a = 2.1*A;
+Ki1 = -Ks1(5);
+
 
 %% Diseño Control LQR
 
 Q = diag([200 50 50 50 200]);
 R = 1;
 
-
-Kq = lqr(As,Bs,Q,R);
-
 AL = 3*A;
+Kq = lqr(3*As,Bs,Q,R);
+
 K_q = Kq(1:4)*0.8;
-Ki_q = -Kq(5)*1.25;
+Ki_q = -Kq(5)*1.2;
 C2 = [1 0 0 0; 0 1 0 0];
 
 
