@@ -1,31 +1,34 @@
-%% Cargando los valores
+%%
+%Elegir archivo
 
-system = readtable("EquipoD_REILQR2.csv");
 
-%% Organización de valores
-
-tiempo = system.Tiempo;
-control = system.CONTROL;
-angle = system.ANGULO;
-entrada = system.REFERENCIA;
-perturb = system.PERTURBACION;
+%% Definir colores pastel
+pastel_colors = [
+    0.486, 0.533, 0.933;  % pastel cyan
+    0.560, 0.386, 0.691;  % pastel lavender
+    0.957, 0.543, 0.376;  % pastel orange
+    0.678, 0.847, 0.902;  % pastel blue
+    0.496, 0.784, 0.596;  % pastel green
+    0.980, 0.502, 0.447;  % pastel red
+];
 
 %% Graficación
 
-colors = colormap(cool(10));
-
 figure(1);
-plot(tiempo,entrada,'LineWidth',2,'Color',colors(3,:));
+plot(Tiempo, CARRITO, 'LineWidth', 3, 'Color', pastel_colors(1,:));
 hold on;
-plot(tiempo,angle,'LineWidth',2.5,'Color',colors(5,:));
-plot(tiempo,control,'LineWidth',2.5,'Color',colors(7,:));
-plot(tiempo,perturb,'LineWidth',2.5,'Color',colors(9,:));
-xlim([-0.4 36]);
-ylim([-0.1 2]);
-xlabel("Tiempo (s)","FontSize",12);
-ylabel("Amplitud","FontSize",12);
-title("Respuesta del PAMH con controlador")
-legend("Entrada","Angulo","Control","Perturbación")
+plot(Tiempo, REI, 'LineWidth', 2.5, 'Color', pastel_colors(2,:));
+plot(Tiempo, ANGULO, 'LineWidth', 3, 'Color', pastel_colors(5,:));
+plot(Tiempo, REFERENCIA, 'LineWidth', 3, 'Color', pastel_colors(6,:));
+%plot(Tiempo, V_CARRITO, 'LineWidth', 2.5, 'Color', pastel_colors(5,:));
+%plot(Tiempo, V_ANGULAR, 'LineWidth', 2.5, 'Color', pastel_colors(6,:));
+xlim([-0.1 13.9]);
+xlabel("Tiempo (s)", "FontSize", 12);
+ylabel("Amplitud", "FontSize", 12);
+title("Respuesta de la grúa con controlador Ackerman")
+legend("Salida", "Acción de control", "Ángulo", "Referencia", ...
+       "Velocidad Carrito", "Velocidad Angular", ...
+       'FontSize', 20, 'Location', 'best');
 grid on;
 grid minor;
 hold off;
