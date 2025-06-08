@@ -1,7 +1,7 @@
 %% Heli - Control
 close all;
 % Cargando workspace
-load('heli.mat');
+%load('heli.mat');
 
 % Cargando archivo csv
 heli_pitch = readtable('ExperimentoPITCH_2.csv');
@@ -111,60 +111,60 @@ yawyaw_model = zpk(YaYaw)
 % Respuesta del modelo ante el estimulo
 pp_y = lsim(pitch2_model,entrada_pitch,tiempo_pitch);
 
-% Gráfica de la respuesta experimental y del modelo
-figure;
-plot(tiempo_pitch,pp_y,'LineWidth',1.5,'Color',[0 0 0],'LineStyle','-');
-hold on;
-plot(tiempo_pitch,entrada_pitch,'LineWidth',2,'Color',[0.8 0 0.4])
-plot(tiempo_pitch,pitch_pitch,'LineWidth',3,'Color',[0.8 0.2 0.9],'LineStyle','-');
-xlim([0 12])
-ylim([0 1.1])
-title('Respuesta del sistema modelado en posicion','FontSize',14)
-xlabel('Tiempo (s)','FontSize',14)
-ylabel('Posicion','FontSize',14)
-legend('Pitch-Pitch Modelado','Entrada','Pitch-Pitch Experimento')
-grid on;
-grid minor;
-hold off;
+% % Gráfica de la respuesta experimental y del modelo
+% figure;
+% plot(tiempo_pitch,pp_y,'LineWidth',1.5,'Color',[0 0 0],'LineStyle','-');
+% hold on;
+% plot(tiempo_pitch,entrada_pitch,'LineWidth',2,'Color',[0.8 0 0.4])
+% plot(tiempo_pitch,pitch_pitch,'LineWidth',3,'Color',[0.8 0.2 0.9],'LineStyle','-');
+% xlim([0 12])
+% ylim([0 1.1])
+% title('Respuesta del sistema modelado en posicion','FontSize',14)
+% xlabel('Tiempo (s)','FontSize',14)
+% ylabel('Posicion','FontSize',14)
+% legend('Pitch-Pitch Modelado','Entrada','Pitch-Pitch Experimento')
+% grid on;
+% grid minor;
+% hold off;
 
 
 % Respuesta del modelo ante el estimulo
 py_y = lsim(pitchyaw_model,entrada_pitch,tiempo_pitch);
 
 % Gráfica de la respuesta experimental y del modelo
-figure;
-plot(tiempo_pitch,py_y,'LineWidth',1.5,'Color',[0 0 0],'LineStyle','-');
-hold on;
-plot(tiempo_pitch,entrada_pitch,'LineWidth',2,'Color',[0.8 0 0.4])
-plot(tiempo_pitch,yaw_pitch,'LineWidth',3,'Color',[0.8 0.2 0.9],'LineStyle','-');
-xlim([0 12])
-ylim([0 20])
-title('Respuesta del sistema modelado en posicion','FontSize',14)
-xlabel('Tiempo (s)','FontSize',14)
-ylabel('Posicion','FontSize',14)
-legend('EPitch-Yaw Modelado','Entrada','EPitch-Yaw Experimento')
-grid on;
-grid minor;
-hold off;
+% figure;
+% plot(tiempo_pitch,py_y,'LineWidth',1.5,'Color',[0 0 0],'LineStyle','-');
+% hold on;
+% plot(tiempo_pitch,entrada_pitch,'LineWidth',2,'Color',[0.8 0 0.4])
+% plot(tiempo_pitch,yaw_pitch,'LineWidth',3,'Color',[0.8 0.2 0.9],'LineStyle','-');
+% xlim([0 12])
+% ylim([0 20])
+% title('Respuesta del sistema modelado en posicion','FontSize',14)
+% xlabel('Tiempo (s)','FontSize',14)
+% ylabel('Posicion','FontSize',14)
+% legend('EPitch-Yaw Modelado','Entrada','EPitch-Yaw Experimento')
+% grid on;
+% grid minor;
+% hold off;
 
 % Respuesta del modelo ante el estimulo
 yy_y = lsim(yawyaw_model,entrada_yyaw,tiempo_yaw);
 
 % Gráfica de la respuesta experimental y del modelo
-figure;
-plot(tiempo_yaw,yy_y,'LineWidth',1.5,'Color',[0 0 0],'LineStyle','-');
-hold on;
-plot(tiempo_yaw,entrada_yyaw,'LineWidth',2,'Color',[0.8 0 0.4])
-plot(tiempo_yaw,yaw_yaw,'LineWidth',3,'Color',[0.8 0.2 0.9],'LineStyle','-');
-xlim([0 12])
-ylim([-20 1])
-title('Respuesta del sistema modelado en posicion','FontSize',14)
-xlabel('Tiempo (s)','FontSize',14)
-ylabel('Posicion','FontSize',14)
-legend('EYaw-Yaw Modelado','Entrada','EYaw-Yaw Experimento')
-grid on;
-grid minor;
-hold off;
+% figure;
+% plot(tiempo_yaw,yy_y,'LineWidth',1.5,'Color',[0 0 0],'LineStyle','-');
+% hold on;
+% plot(tiempo_yaw,entrada_yyaw,'LineWidth',2,'Color',[0.8 0 0.4])
+% plot(tiempo_yaw,yaw_yaw,'LineWidth',3,'Color',[0.8 0.2 0.9],'LineStyle','-');
+% xlim([0 12])
+% ylim([-20 1])
+% title('Respuesta del sistema modelado en posicion','FontSize',14)
+% xlabel('Tiempo (s)','FontSize',14)
+% ylabel('Posicion','FontSize',14)
+% legend('EYaw-Yaw Modelado','Entrada','EYaw-Yaw Experimento')
+% grid on;
+% grid minor;
+% hold off;
 
 %% Identificación del MISO
 % Parámetros de los modelos
@@ -206,15 +206,29 @@ modeloHeli
  zpk(modeloHeli(2,2))
 
 
-% Ubicacion de polos
+% Ubicacion de polos 1
  As = [A;-C];
  As = [As zeros(size(As,1), 2)];
  Bs = [B;0 0;0 0];
- xx=0.55*4
- Ps = [-0.55+0.45i -0.55-0.45i -xx -xx+0.5 -xx+1 -xx+1.5]
- Ksp = place(As,Bs,Ps)
- K = Ksp(:,1:4)
- Ki = -Ksp (:,5:6)
+ %Prueba 2
+ Ps1 = [-0.535+0.37i -0.535-0.37i -1.5 -1.6 -1.7 -1.8]
+ Ksp1 = place(As,Bs,Ps1)
+ K1 = Ksp1(:,1:4)
+ Ki1 = -Ksp1 (:,5:6)
+ %Prueba 3
+ Ps2 = [-0.525+0.37i -0.525-0.37i -1.8 -1.9 -2.1 -2.2]
+ Ksp2 = place(As,Bs,Ps2)
+ K2 = Ksp2(:,1:4)
+ Ki2 = -Ksp2 (:,5:6)
+ %Prueba 3
+ Ps3 = [-0.515+0.37i -0.515-0.37i -2 -2.01 -2.02 -2.03]
+ Ksp3 = place(As,Bs,Ps3)
+ K3 = Ksp3(:,1:4)
+ Ki3 = -Ksp3 (:,5:6)
+
+
+
+
 
 % LQR
 
