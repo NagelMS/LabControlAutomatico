@@ -218,8 +218,14 @@ modeloHeli
 
 % LQR
 
- Q = (eye(6))*5000; 
- R = eye(2); 
+ Q = [100 0 0 0 0 0; %Bajarlo, sube velocidad
+       0 500 0 0 0 0; %X
+       0 0 500 0 0 0;%Bajarlo, sube velocidad
+       0 0 0 2000 0 0;%Subirlo, sube velocidad mucho
+       0 0 0 0 2000 0;%Subirlo, sube velocidad mucho
+       0 0 0 0 0 1000;]; %X
+
+ R = [4 0; 0 1]; 
  Ksq = lqr(As,Bs,Q,R);
  KL = Ksq(:,1:4);
  KiL = -Ksq (:,5:6);
