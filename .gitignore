@@ -1,0 +1,12 @@
+#LaTex unnecesary compilation files
+**/build/
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.run.xml
+*.synctex.gz
